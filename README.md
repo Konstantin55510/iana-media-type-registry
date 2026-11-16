@@ -30,3 +30,10 @@ All names below are importable from the package root (`iana_media_type_registry`
 - `MEDIA_TYPES` — the full registry dict, keyed by lowercase `type/subtype`.
 - `EXTENSION_TO_MEDIA_TYPES` — reverse index, extension (lowercase, no dot) to list of media types.
 - `DATA_SOURCE` — provenance string documenting the snapshot.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
